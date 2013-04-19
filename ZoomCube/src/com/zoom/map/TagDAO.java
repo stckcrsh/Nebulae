@@ -13,8 +13,8 @@ public class TagDAO {
 	private SQLiteDatabase database;
 	private SQLiteHelper dbHelper;
 
-	private String[] allColumns = { SQLiteHelper.COLUMNS_TAGS.ITEMID.Value(),
-		SQLiteHelper.COLUMNS_TAGS.TAG.Value() };
+	private String[] allColumns = { Tag.COLUMNS_TAGS.ITEMID.Value(),
+		Tag.COLUMNS_TAGS.TAG.Value() };
 
 	public TagDAO(Context _context) {
 		dbHelper = new SQLiteHelper(_context);
@@ -27,14 +27,14 @@ public class TagDAO {
 		dbHelper.close();
 	}
 
-	public Tag createTag(String _tag, int _itemId) {
+	public Tag createTag(String _tag, long _itemId) {
 	    ContentValues values = new ContentValues();
-	    values.put(SQLiteHelper.COLUMNS_TAGS.TAG.Value(), _tag);
-	    values.put(SQLiteHelper.COLUMNS_TAGS.ITEMID.Value(), _itemId);
-	    long insertId = database.insert(SQLiteHelper.TABLE_TAGS, null,
+	    values.put(Tag.COLUMNS_TAGS.TAG.Value(), _tag);
+	    values.put(Tag.COLUMNS_TAGS.ITEMID.Value(), _itemId);
+	    long insertId = database.insert(Tag.TABLE_NAME, null,
 	        values);
-	    Cursor cursor = database.query(SQLiteHelper.TABLE_TAGS,
-	        allColumns, SQLiteHelper.COLUMNS_TAGS.ITEMID.Value() + " = " + _itemId, null,
+	    Cursor cursor = database.query(Tag.TABLE_NAME,
+	        allColumns, Tag.COLUMNS_TAGS.ITEMID.Value() + " = " + _itemId, null,
 	        null, null, null);
 	    cursor.moveToFirst();
 	    Tag newTag = cursorToTag(cursor);
@@ -45,7 +45,7 @@ public class TagDAO {
 	public List<Tag> getAllTags() {
 	    List<Tag> tags = new ArrayList<Tag>();
 
-	    Cursor cursor = database.query(SQLiteHelper.TABLE_TAGS,
+	    Cursor cursor = database.query(Tag.TABLE_NAME,
 	        allColumns, null, null, null, null, null);
 
 	    cursor.moveToFirst();
@@ -59,11 +59,11 @@ public class TagDAO {
 	    return tags;
 	  }
 	
-	public List<Tag> getAllTagsByItemId(int _itemId){
+	public List<Tag> getAllTagsByItemId(long _itemId){
 		List<Tag> tags = new ArrayList<Tag>();
-		Cursor cursor = database.rawQuery("SELECT * FROM "+SQLiteHelper.TABLE_TAGS+" WHERE "+SQLiteHelper.COLUMNS_TAGS.ITEMID.Value()+" = " +
+		Cursor cursor = database.rawQuery("SELECT * FROM "+Tag.TABLE_NAME+" WHERE "+Tag.COLUMNS_TAGS.ITEMID.Value()+" = " +
 				_itemId, null);
-//		Cursor cursor = database.query(SQLiteHelper.TABLE_TAGS, allColumns, SQLiteHelper.COLUMNS_TAGS.ITEMID.Value()+" = "+_itemId, null, null, null, null);
+//		Cursor cursor = database.query(Tag.TABLE_TAGS, allColumns, Tag.COLUMNS_TAGS.ITEMID.Value()+" = "+_itemId, null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()){
 			Tag tag = cursorToTag(cursor);
@@ -75,12 +75,12 @@ public class TagDAO {
 	}
 	
 	 public void deleteTag(Tag _tag) {
-		int id = _tag.GetItemId();
+		long id = _tag.GetItemId();
 		String tag = _tag.GetTag();
 		System.out.println("Tag deleted with id: " + id);
 		
-		database.delete(SQLiteHelper.TABLE_TAGS, SQLiteHelper.COLUMNS_TAGS.ITEMID.Value() + " = "+id+"  AND " +
-				SQLiteHelper.COLUMNS_TAGS.TAG.Value() + " = '"+tag+"'", new String[0]);
+		database.delete(Tag.TABLE_NAME, Tag.COLUMNS_TAGS.ITEMID.Value() + " = "+id+"  AND " +
+				Tag.COLUMNS_TAGS.TAG.Value() + " = '"+tag+"'", new String[0]);
 	 }
 
 	
@@ -92,6 +92,6 @@ public class TagDAO {
 	 }
 
 	 public void emptyTags(){
-		 database.delete(SQLiteHelper.TABLE_TAGS, null, null);
+		 database.delete(Tag.TABLE_NAME, null, null);
 	 }
 }

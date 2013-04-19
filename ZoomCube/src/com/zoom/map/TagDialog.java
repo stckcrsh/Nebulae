@@ -27,7 +27,7 @@ public class TagDialog extends Dialog implements TagListener{
 	
 	private TagDialogListener listener;
 	private Context context;
-	private int itemId;
+	private long itemId;
 	
 	public TagDialog(int _itemId, Context _context, TagDialogListener _listener) {
 		super(_context);
@@ -112,7 +112,7 @@ public class TagDialog extends Dialog implements TagListener{
 				}
 			}
 			
-			public View.OnClickListener init(Context _context, TagListener _listener, int _itemId){
+			public View.OnClickListener init(Context _context, TagListener _listener, long _itemId){
 				context = _context;
 				listener = _listener;
 				itemId = _itemId;
@@ -166,7 +166,7 @@ public class TagDialog extends Dialog implements TagListener{
 	}
 
 	@Override
-	public void AddTag(String _tag, int _itemId) {
+	public void AddTag(String _tag, long _itemId) {
 		// TODO Auto-generated method stub
 		Button btn = new Button(context);
 		LinearLayout ll = (LinearLayout)this.findViewById(R.id.tag_layout);
@@ -176,9 +176,9 @@ public class TagDialog extends Dialog implements TagListener{
 			private Button btn;
 			private LinearLayout ll;
 			private TagListener listener;
-			private int itemId;
+			private long itemId;
 			
-			public View.OnClickListener init(Button _btn, LinearLayout _layout, TagListener _listener, int _itemId){
+			public View.OnClickListener init(Button _btn, LinearLayout _layout, TagListener _listener, long _itemId){
 				btn = _btn;
 				ll = _layout;
 				listener = _listener;
@@ -199,7 +199,7 @@ public class TagDialog extends Dialog implements TagListener{
 	}
 
 	@Override
-	public void DeleteTag(String _tag, int _itemId) {
+	public void DeleteTag(String _tag, long _itemId) {
 		// TODO Auto-generated method stub
 		TagDAO tDAO = new TagDAO(context);
 		tDAO.open();
