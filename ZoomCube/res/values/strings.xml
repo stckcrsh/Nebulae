@@ -8,7 +8,9 @@
     <string name="edit_message">Enter a location</string>
     <string name="button_send">Send</string>
     <string name="title_activity_photo_view">PhotoViewActivity</string>
-        <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="str_btn_find">Find</string>
+    <string name="hnt_et_location">Enter location</string>
     
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
